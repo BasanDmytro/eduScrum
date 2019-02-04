@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Board from 'react-trello'
 import logo from './logo.svg';
+import { Chart } from "react-google-charts";
 import NewCard from './trello.js'
 import './App.css';
 
@@ -26,7 +27,37 @@ const data = {
 
 class App extends Component {
   render() {
-    return <NewCard />
+    return (
+      <div>
+        <NewCard />
+        <div className={"my-pretty-chart-container"}>
+          <Chart
+            width={'600px'}
+            height={'400px'}
+            chartType="LineChart"
+            loader={<div>Loading Chart</div>}
+            data={[
+              ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
+              [0, 5, 5],
+              [1, 4, 3],
+              [2, 3, 3],
+              [3, 2, 3],
+              [4, 1, 3],
+              [5, 0, 0]
+            ]}
+            options={{
+              hAxis: {
+                title: 'Time',
+              },
+              vAxis: {
+                title: 'Popularity',
+              },
+            }}
+            rootProps={{ 'data-testid': '1' }}
+          />
+        </div>
+      </div>
+    )
   }
 }
 

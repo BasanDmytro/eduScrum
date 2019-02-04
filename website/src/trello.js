@@ -45,7 +45,7 @@ class NewCard extends Component {
   }
 
   render() {
-    const {onCancel} = this.props
+    const {onCancel} = this.props;
     return (
       <div>
         <Board

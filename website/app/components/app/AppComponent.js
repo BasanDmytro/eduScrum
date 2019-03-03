@@ -3,7 +3,7 @@ import BoardProject from '../pages/trello/trello'
 import Login from '../pages/login/login'
 import '../../assets/styles/App.css';
 
-class AppComponent extends Component {
+class Menu extends Component {
   render() {
     return (
       <div>
@@ -14,4 +14,4 @@ class AppComponent extends Component {
   }
 }
 
-export default AppComponent;
+export default Menu;

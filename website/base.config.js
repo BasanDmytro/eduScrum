@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const B = 1;
 const KB = 1000 * B;
@@ -8,19 +9,23 @@ const KB = 1000 * B;
 const rootPath = __dirname;
 
 module.exports = {
-  entry: ['@babel/polyfill', path.join(rootPath, 'app/index.js')],
+  entry: path.join(rootPath, 'app'),
   output: {
-    path: path.join(rootPath, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/'
+    path: path.join(rootPath, '..', 'server', 'public', 'dist'),
+    filename: '[chunkhash].js',
+    chunkFilename: '[chunkhash].js',
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.jsx$/,
+        exclude: /node_modules/,
         loader: ['babel-loader', 'eslint-loader'],
-        include: [path.resolve(rootPath, 'app')],
-        exclude: [/node_modules/, path.resolve(rootPath, 'dist') ]
+      },
+      {
+        test: /\.js$/,
+        exclude: [/node_modules/, /DropdownConstants/],
+        loader: ['babel-loader', 'eslint-loader'],
       },
       {
         test: /\.s?css$/,
@@ -111,15 +116,34 @@ module.exports = {
     ]
   },
   resolve: {
-    modules: ['node_modules', path.resolve(rootPath, '')]
+    modules: [path.join(rootPath, 'app'), 'node_modules'],
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
+    new HtmlWebpackPlugin({
+      template: path.resolve('index.html'),
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // new webpack.IgnorePlugin(/^\.\/(?!core)\w*$/, /lodash$/),
+    function () {
+      this.hooks.done.tap('AggresiveSplittingPlugin', (statsData) => {
+        const pathToDist = path.resolve('..', 'server', 'public', 'dist');
+        const pathToIndexHtml = path.join(pathToDist, 'index.html');
+        const stats = statsData.toJson();
+        const html = fs.readFileSync(pathToIndexHtml, 'utf8');
+        const filteredAssets = stats.entrypoints.main.assets.filter((item) => item.indexOf('map') === -1);
+        if (fs.existsSync(pathToDist)) {
+          const jsFiles = fs.readdirSync(pathToDist).filter((file) => {
+            return ((file.endsWith('.js') || file.endsWith('.js.map')) && (!filteredAssets.includes(file)));
+          });
+          jsFiles.forEach((file) => fs.unlinkSync(path.join(pathToDist, file)));
+        }
+        const scripts = filteredAssets.map((chunk) => {
+          return `<script src="${chunk}"></script>`;
+        }).join('\n');
+        const cleanup = html.replace(/<script(?!\stype).+<\/script>\n/g, '');
+        const parts = cleanup.split('</html>');
+        const result = parts[0] + '<div id="root"></div>\n' + scripts + '</html>';
+        fs.writeFileSync(pathToIndexHtml, result);
+      });
+    },
   ],
   target: 'web'
 };

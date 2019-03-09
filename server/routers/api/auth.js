@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const UserService = require('../../layers/domain/services/UserService');
 
 router.post('/login', async (req, res) => { // count of boards
   try {
-    res.status(200).end();
+    const data = {email: 'test@gmail.com', password: 'test'};
+    const user = await UserService.authUser(data);
+    res.status(200).send(user);
   } catch (err) {
     console.log(err);
   }
@@ -10,7 +13,18 @@ router.post('/login', async (req, res) => { // count of boards
 
 router.post('/logup', async (req, res) => { // count of boards
   try {
-    res.status(200).end();
+    const data = {
+      email: 'test@gmail.com',
+      password: 'test',
+      fullName: 'Test Test',
+      firstName: 'Test',
+      lastName: 'Test',
+      isArchived: false,
+      isBlocked: false,
+      createdAt: new Date()
+    };
+    const user = await UserService.createUser(data);
+    res.status(200).send(user);
   } catch (err) {
     console.log(err);
   }

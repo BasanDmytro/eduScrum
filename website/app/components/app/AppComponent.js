@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BoardProject from '../pages/trello/trello'
 import Login from '../pages/login/login'
+import Registration from '../pages/registration/registration'
 import '../../assets/styles/App.css';
 
 import * as authActions from 'redux/modules/auth/authActions';
@@ -15,7 +16,7 @@ class Menu extends Component {
           <Login /> :
           ''
         }
-
+        <Registration />
         <BoardProject />
       </div>
     )

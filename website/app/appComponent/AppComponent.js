@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NotFoundPage from '../components/pages/NotFoundPage/NotFoundPage';
 import Menu from '../components/app/AppComponent';
 
@@ -15,18 +15,14 @@ const RouteWithHeader = ({component: Component, ...rest}) => (
 class AppComponent extends React.Component {
   render() {
     return (
-      <BrowserRouter>
+      <Router>
         <div>
-          <main className="main-wrapper">
-            <Switch>
-              <Route path="/login" component={Menu} />
-              <RouteWithHeader path="/trello" component={Menu} />
-              <Route exact path="/" render={() => <Redirect to="/trello" component={Menu} />} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </main>
+          <Route exact path="/" component={Menu} />
+          <Route path="/about" component={Menu} />
+          <Route component={NotFoundPage} />
+          <Route path="/topics" component={Menu} />
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

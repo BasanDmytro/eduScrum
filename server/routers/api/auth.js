@@ -3,7 +3,7 @@ const UserService = require('../../layers/domain/services/UserService');
 
 router.post('/login', async (req, res) => { // count of boards
   try {
-    const data = {email: 'test@gmail.com', password: 'test'};
+    const data = { email: req.body.email, password: req.body.password };
     const user = await UserService.authUser(data);
     res.status(200).send(user);
   } catch (err) {

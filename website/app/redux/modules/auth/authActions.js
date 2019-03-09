@@ -2,12 +2,11 @@ import axios from 'axios';
 import AUTH_ACTION_CONSTANTS from './authActionConstants';
 
 
-export const login = (email, idToken, accessToken, expiresAt) => dispatch => {
+export const login = (email, password) => dispatch => {
   return axios
-    .get('http://localhost:3001/api/talents/?email=${email}')
+    .post('http://localhost:3001/api/auth/login', { email, password })
     .then(res => {
-      const user = {...res.data.data[0]};
-      user.profile.email = email;
+      const user = {...res.data};
 
       dispatch({
         type: AUTH_ACTION_CONSTANTS.LOGIN,
@@ -15,9 +14,8 @@ export const login = (email, idToken, accessToken, expiresAt) => dispatch => {
       });
 
       localStorage.setItem('loginData', JSON.stringify({
-        email, idToken, accessToken, expiresAt,
+        user
       }));
-
 
       return user;
     })

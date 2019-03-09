@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { ReactTextField, validator } from 'react-textfield';
+import * as authActions from '../../../redux/modules/auth/authActions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class Login extends Component {
 
@@ -9,7 +11,7 @@ class Login extends Component {
   };
 
   handleClick(e) {
-    console.log(e);
+    this.props.login(this.state.email, this.state.password);
   }
 
   handleInputChangePassword = (event) => {
@@ -33,4 +35,13 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state, props) => ({
+  user: state.auth.user,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  login: authActions.login,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+

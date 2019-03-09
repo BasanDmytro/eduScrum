@@ -14,11 +14,11 @@ router.post('/login', async (req, res) => { // count of boards
 router.post('/logup', async (req, res) => { // count of boards
   try {
     const data = {
-      email: 'test@gmail.com',
-      password: 'test',
-      fullName: 'Test Test',
-      firstName: 'Test',
-      lastName: 'Test',
+      email: req.body.email,
+      password: req.body.password,
+      fullName: `${req.body.firstName} ${req.body.lastName}`,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       isArchived: false,
       isBlocked: false,
       createdAt: new Date()

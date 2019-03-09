@@ -35,28 +35,36 @@ class Registration extends Component {
     event.preventDefault();
   }
 
+  checkPassword = () => {
+    if (this.state.password !== this.state.passwordConfirmation) {
+      return 'red'
+    } else {
+      return 'black'
+    }
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
       <label>
         Prénom:
-        <input type="text" firstName={this.state.value} onChange={this.handleInputChangeFirstName} name="Prénom"/>
+        <input type="text" onChange={this.handleInputChangeFirstName} name="Prénom"/>
       </label>
       <label>
         Name:
-        <input type="text" lastName={this.state.value} onChange={this.handleInputChangeLastName} />
+        <input type="text" onChange={this.handleInputChangeLastName} />
       </label>
       <label>
         Adresse mail:
-        <input type="email" email={this.state.value} onChange={this.handleInputChangeEmail} />
+        <input type="email" onChange={this.handleInputChangeEmail} />
       </label>
       <label>
         Mot de passe:
-        <input type="password" password={this.state.value} onChange={this.handleInputChangePassword} />
+        <input type="password" onChange={this.handleInputChangePassword} />
       </label>
       <label>
         Confirmation du mot de passe:
-        <input type="password" passwordConfirmation={this.state.value} onChange={this.handleInputChangePasswordConfirmation} />
+        <input type="password" style={{color: this.checkPassword()}} onChange={this.handleInputChangePasswordConfirmation} />
       </label>
       <input type="submit" value="S'inscrire" />
     </form>

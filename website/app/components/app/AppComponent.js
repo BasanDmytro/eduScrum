@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BoardProject from '../pages/trello/trello'
 import Login from '../pages/login/login'
+import Registration from '../pages/registration/registration'
 import '../../assets/styles/App.css';
 
 class Menu extends Component {
@@ -8,6 +9,7 @@ class Menu extends Component {
     return (
       <div>
         <Login />
+        <Registration />
         <BoardProject />
       </div>
     )

@@ -2,40 +2,32 @@ import React, { Component } from 'react';
 import { ReactTextField, validator } from 'react-textfield';
 
 class Login extends Component {
+
+  state = {
+    email: '',
+    password: ''
+  };
+
+  handleClick(e) {
+    console.log(e);
+  }
+
+  handleInputChangePassword = (event) => {
+    this.setState({password: event.target.value});
+  };
+
+  handleInputChangeEmail = (event) => {
+    this.setState({email: event.target.value});
+  };
+
   render() {
     return (
       <div>
+        <input onChange={this.handleInputChangeEmail} type="email" />
+        <input onChange={this.handleInputChangePassword} type="password" />
         <button onClick={(e) => this.handleClick(e)}>
             Se connecter
         </button>
-        <ReactTextField
-        name="Identifiant"
-        type="text"
-        placeholder="Identifiant"
-        validators={[
-          {
-            message: "La longueur de l'identifiant doit être compris entre 4 et 12 charactères.",
-            validator: value => validator.length(value, { min: 4, max: 12 }),
-          },
-          {
-            message: "L'identifiant doit comporter seulement des lettres.",
-            validator: value => validator.isAlphanumeric(value),
-          },
-        ]}
-        successMessage="Cet identifiant est invalide"
-        />
-        <ReactTextField
-        name="Mot de passe"
-        type="text"
-        placeholder="Mot de passe"
-        validators={[
-          {
-            message: "La longueur de l'identifiant doit être compris entre 4 et 12 charactères.",
-            validator: value => validator.length(value, { min: 4, max: 12 }),
-          },
-        ]}
-        successMessage="Le mot de passe est invalide"
-        />
       </div>
     )
   }

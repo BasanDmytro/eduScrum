@@ -1,10 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import NotFoundPage from '../components/pages/NotFoundPage/NotFoundPage';
-import Menu from '../components/app/AppComponent';
-
+import PublicHeader from '../components/PublicHeader';
+import Login from '../components/pages/login/login'
+import Registration from '../components/pages/registration/registration'
+import Info from '../components/pages/info/info'
+import BoardProject from '../components/pages/trello/trello'
+import * as authActions from "../redux/modules/auth/authActions";
 
 const RouteWithHeader = ({component: Component, ...rest}) => (
   <div>
@@ -15,22 +19,31 @@ const RouteWithHeader = ({component: Component, ...rest}) => (
 class AppComponent extends React.Component {
   render() {
     return (
-      <Router>
         <div>
-          <Route exact path="/" component={Menu} />
-          <Route path="/about" component={Menu} />
-          <Route component={NotFoundPage} />
-          <Route path="/topics" component={Menu} />
+          <PublicHeader
+            user={this.props.user}
+          />
+          <div style={{'margin-top': '80px'}}>
+            <Switch>
+              <Route exact path="/" component={Info} />
+              <Route path="/trello" component={BoardProject} />
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Registration} />
+              <Route exact path="/" render={() => <Redirect to="/" component={Info} />} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </div>
         </div>
-      </Router>
     );
   }
 }
 
 const mapStateToProps = (state, props) => ({
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  login: authActions.login,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppComponent));

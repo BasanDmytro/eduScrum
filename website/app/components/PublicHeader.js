@@ -37,7 +37,7 @@ class PublicHeader extends React.Component {
                     <Link to="/signup"><button>Sign Up</button></Link>
                   </div>
                   :
-                  <button>Logout</button>
+                  <button onClick={() => this.props.logout()}>Logout</button>
                 }
               </div>
             </Toolbar>

@@ -1,7 +1,7 @@
 import AUTH_ACTION_CONSTANTS from './authActionConstants';
 
 const defaultState = {
-  user: null,
+  user: localStorage.getItem('loginData') || '',
 };
 
 export default (state = defaultState, action) => {

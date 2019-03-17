@@ -22,6 +22,7 @@ class AppComponent extends React.Component {
         <div>
           <PublicHeader
             user={this.props.user}
+            logout={this.props.logout}
           />
           <div style={{'margin-top': '80px'}}>
             <Switch>
@@ -44,6 +45,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   login: authActions.login,
+  logout: authActions.logout,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppComponent));

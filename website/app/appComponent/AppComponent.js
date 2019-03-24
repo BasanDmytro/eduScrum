@@ -24,7 +24,7 @@ class AppComponent extends React.Component {
             user={this.props.user}
             logout={this.props.logout}
           />
-          <div style={{'margin-top': '80px'}}>
+          <div style={{'margin-top': '64px'}}>
             <Switch>
               <Route exact path="/" component={Info} />
               <Route path="/trello" component={BoardProject} />

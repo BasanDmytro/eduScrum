@@ -5,6 +5,10 @@ class UserService {
     this.name = 'UserService';
   }
 
+  async getUsers(query) {
+    return await UserRepository.find(query = {}, {}, {});
+  }
+
   async createUser(data) {
     return await UserRepository.create(data);
   }

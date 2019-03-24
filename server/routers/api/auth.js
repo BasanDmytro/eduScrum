@@ -11,6 +11,16 @@ router.post('/login', async (req, res) => { // count of boards
   }
 });
 
+router.get('/', async (req, res) => { // count of boards
+  try {
+    const query = req.query || {};
+    const users = await UserService.getUsers(query);
+    res.status(200).send(users);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.post('/logup', async (req, res) => { // count of boards
   try {
     const data = {

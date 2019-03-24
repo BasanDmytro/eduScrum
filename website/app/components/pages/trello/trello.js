@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import Board from 'react-trello'
 import { Chart } from "react-google-charts";
+import * as taskActions from '../../../redux/modules/tasks/tasksActions';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
 class BoardProject extends Component {
 
@@ -33,22 +36,35 @@ class BoardProject extends Component {
     totalTasks: 2
   };
 
+  componentWillMount() {
+    this.props.getTasks();
+  }
+
   shouldReceiveNewData = nextData => {
     console.log('Board has changed');
     console.log(nextData)
   };
 
   handleCardDelete = (cardId, laneId) => {
+
     console.log(`Card: ${cardId} deleted from lane: ${laneId}`)
   };
 
   handleCardAdd = (card, laneId) => {
     console.log(`New card added to lane ${laneId}`);
     this.setState({totalTasks: this.state.totalTasks + 1});
-    console.dir(card)
+    const newCard = {
+      name: card.title,
+      description: card.description,
+      time: card.label,
+      laneCode: laneId
+    };
+    this.props.createTask(newCard);
+    this.props.getTasks();
   };
 
   render() {
+    console.log(this);
     return (
       <div>
         <Board
@@ -89,4 +105,14 @@ class BoardProject extends Component {
   }
 }
 
-export default BoardProject;
+const mapStateToProps = (state, props) => ({
+  tasks: state.tasks.tasks,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getTasks: taskActions.getTasks,
+  createTask: taskActions.createTask,
+  updateTask: taskActions.updateTask,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoardProject);

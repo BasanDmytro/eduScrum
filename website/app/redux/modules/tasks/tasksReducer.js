@@ -13,6 +13,9 @@ export default (state = defaultState, action) => {
     case TASKS_ACTION_CONSTANTS.GET_TASKS_COUNT:
       return handleGetTasksCount(state, action.payload);
 
+    case TASKS_ACTION_CONSTANTS.CREATE_TASK:
+      return handleGetTasks(state, action.payload);
+
     default:
       return state;
   }

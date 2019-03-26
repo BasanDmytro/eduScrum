@@ -6,7 +6,7 @@ const Users = new Schema(
   {
     _id: String,
     createdAt: Date,
-    roles: Object,
+    role: String,
     email: String,
     password: String,
     fullName: String,
@@ -16,6 +16,7 @@ const Users = new Schema(
     overview: String,
     university: String,
     course: String,
+    birthday: String,
     isArchived: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false },
   },

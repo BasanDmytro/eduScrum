@@ -68,6 +68,11 @@ class BoardProject extends Component {
           id: 'done',
           title: 'Done',
           cards: []
+        },
+        {
+          id: 'inProgress',
+          title: 'In Progress',
+          cards: []
         }
       ],
     },
@@ -125,7 +130,6 @@ class BoardProject extends Component {
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
           editable
-          canAddLanes
         />
         <div className={"my-pretty-chart-container"}>
           <Chart

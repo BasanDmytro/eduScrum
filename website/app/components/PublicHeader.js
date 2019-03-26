@@ -32,6 +32,10 @@ class PublicHeader extends React.Component {
                 <Link to="/admin" style={{color: 'white', 'margin-left': '20px'}}>
                   Admin
                 </Link>
+
+                <Link to="/prof" style={{color: 'white', 'margin-left': '20px'}}>
+                  Professor
+                </Link>
               </div>
 
               <div className="right-action" style={{'margin-left': '85%', color: 'red'}}>

@@ -68,25 +68,20 @@ class BoardProject extends Component {
           id: 'done',
           title: 'Done',
           cards: []
-        },
-        {
-          id: 'inProgress',
-          title: 'In Progress',
-          cards: []
         }
       ],
     },
     totalTasks: 2
   };
-
   componentWillMount() {
     this.props.getTasks();
     this.props.getUsers();
   }
 
-  shouldReceiveNewData = nextData => {
+  shouldReceiveNewData = (card, laneId) => {
+    console.log(card);
     console.log('Board has changed');
-    console.log(nextData)
+    console.log(laneId)
   };
 
   handleCardDelete = (cardId, laneId) => {
@@ -94,14 +89,28 @@ class BoardProject extends Component {
     console.log(`Card: ${cardId} deleted from lane: ${laneId}`)
   };
 
+
+  handleDragStart = (cardId, laneId) => {
+    console.log('drag started')
+    console.log(`cardId: ${cardId}`)
+    console.log(`laneId: ${laneId}`)
+  }
+
+  handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
+    console.log('drag ended')
+    console.log(`cardId: ${cardId}`)
+    console.log(`sourceLaneId: ${sourceLaneId}`)
+    console.log(`targetLaneId: ${targetLaneId}`)
+  }
+
   handleCardAdd = (card, laneId) => {
     console.log(`New card added to lane ${laneId}`);
     this.setState({totalTasks: this.state.totalTasks + 1});
     const newCard = {
-      name: card.title,
+      title: card.title,
       description: card.description,
-      time: card.label,
-      laneCode: laneId
+      label: card.label,
+      laneId: laneId
     };
     this.props.createTask(newCard);
     this.props.getTasks();
@@ -128,9 +137,10 @@ class BoardProject extends Component {
           id="EditableBoard1"
           onDataChange={this.shouldReceiveNewData}
           onCardDelete={this.handleCardDelete}
+          handleDragStart={this.handleDragStart}
+          handleDragEnd={this.handleDragEnd}
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
-
         />
         <div className={"my-pretty-chart-container"}>
           <Chart

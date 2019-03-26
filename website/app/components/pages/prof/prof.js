@@ -68,11 +68,6 @@ class BoardProject extends Component {
           id: 'done',
           title: 'Done',
           cards: []
-        },
-        {
-          id: 'inProgress',
-          title: 'In Progress',
-          cards: []
         }
       ],
     },
@@ -98,10 +93,10 @@ class BoardProject extends Component {
     console.log(`New card added to lane ${laneId}`);
     this.setState({totalTasks: this.state.totalTasks + 1});
     const newCard = {
-      name: card.title,
+      title: card.title,
       description: card.description,
-      time: card.label,
-      laneCode: laneId
+      label: card.label,
+      laneId: laneId
     };
     this.props.createTask(newCard);
     this.props.getTasks();
@@ -130,6 +125,7 @@ class BoardProject extends Component {
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
           editable
+          canAddLanes
         />
         <div className={"my-pretty-chart-container"}>
           <Chart

@@ -5,13 +5,14 @@ const { Schema } = mongoose;
 const Task = new Schema(
   {
     _id: String,
-    name: String,
-    description: String,
+    title: String,
+    label: String,
     time: String,
+    description: String,
     isArchived: Boolean,
     status: String,
     createdAt: Date,
-    laneCode: String
+    laneId: String
   },
   { timestamps: true }
 );

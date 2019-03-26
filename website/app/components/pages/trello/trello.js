@@ -46,58 +46,115 @@ const styles = theme => ({
 });
 
 class BoardProject extends Component {
-  state = {
-    data: {
-      lanes: [
-        {
-          id: 'backlog',
-          title: 'Backlog',
-          cards: [{
-            description: "Test Task 1",
-            id: "e0141ad0-2e0c-11e9-af34-752500e6cd28",
-            laneId: "backlog",
-            title: "Task 1",
-            label: 45
-          }, {
-            description: "Test Task 2",
-            id: "e0141ad0-asd2-11e9-af34-752500e6cd98",
-            laneId: "backlog",
-            title: "Task 2",
-            label: 15
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        lanes: [
+          {
+            id: 'backlog',
+            title: 'Backlog',
+            cards: [{
+              description: "Test Task 1",
+              id: "e0141ad0-2e0c-11e9-af34-752500e6cd28",
+              laneId: "backlog",
+              title: "Task 1"
+            }, {
+              description: "Test Task 2",
+              id: "e0141ad0-asd2-11e9-af34-752500e6cd98",
+              laneId: "backlog",
+              title: "Task 2"
+            }
+            ]
+          },
+          {
+            id: 'done',
+            title: 'Done',
+            cards: []
           }
-          ]
-        },
-        {
-          id: 'done',
-          title: 'Done',
-          cards: []
-        },
-        {
-          id: 'inProgress',
-          title: 'In Progress',
-          cards: []
-        }
-      ],
-    },
-    totalTasks: 2,
-    totalLabel: 60,
-    totalLabelDone: 0,
-    timeSprint: 0,
-    totalTeam: 1,
-    startProject: new moment(),
-    dataChart:[
-      ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
-    ]
-  };
-
-  componentWillMount() {
-    this.props.getTasks();
-    this.props.getUsers();
+        ],
+      },
+      totalTasks: 2,
+      totalLabel: 60,
+      totalLabelDone: 0,
+      timeSprint: 0,
+      totalTeam: 1,
+      startProject: new moment(),
+      dataChart:[
+        ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
+      ]
+    };
   }
 
-  shouldReceiveNewData = nextData => {
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.tasks.length !== state.data.lanes[0].cards + state.data.lanes[1].cards ) {
+      state.data.lanes[0].cards = [];
+      state.data.lanes[1].cards = [];
+      props.tasks.forEach(task => {
+        if (task.laneId === 'backlog') {
+          const cardnew = {
+            title: task.title,
+            description: task.description,
+            label: task.label,
+            id: task._id,
+            laneId: 'backlog'
+          };
+          state.data.lanes[0].cards.push(cardnew);
+        }
+        if (task.laneId === 'done') {
+          const cardnew = {
+            title: task.title,
+            description: task.description,
+            label: task.label,
+            id: task._id,
+            laneId: 'done'
+          };
+          state.data.lanes[1].cards.push(cardnew);
+        }
+      });
+      return {
+        data: state.data
+      }
+    }
+    return null;
+  };
+
+  componentDidMount() {
+    this.props.getTasks();
+    this.props.getUsers();
+    const data = this.state.data;
+    data.lanes[0].cards = [];
+    data.lanes[1].cards = [];
+    this.props.tasks.forEach(task => {
+      if (task.laneId === 'backlog') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id,
+          laneId: 'backlog'
+        };
+        data.lanes[0].cards.push(cardnew);
+      }
+      if (task.laneId === 'done') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id,
+          laneId: 'done'
+        };
+        data.lanes[1].cards.push(cardnew);
+      }
+    });
+    this.setState({data});
+  }
+
+  shouldReceiveNewData = (card, laneId) => {
+    console.log(card);
     console.log('Board has changed');
-    console.log(nextData)
+    console.log(laneId)
   };
 
   handleCardDelete = (cardId, laneId) => {
@@ -119,6 +176,19 @@ class BoardProject extends Component {
     this.props.getTasks();
   };
 
+  handleDragStart = (cardId, laneId) => {
+    console.log('drag started')
+    console.log(`cardId: ${cardId}`)
+    console.log(`laneId: ${laneId}`)
+  };
+
+  handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
+    console.log('drag ended')
+    console.log(`cardId: ${cardId}`)
+    console.log(`sourceLaneId: ${sourceLaneId}`)
+    console.log(`targetLaneId: ${targetLaneId}`)
+  };
+
   handleInputChangeTimeSprint = (event) => {
     this.setState({timeSprint: event.target.value});
   };
@@ -126,7 +196,7 @@ class BoardProject extends Component {
   handleInputChangeTotalTeam = (event) => {
     this.setState({totalTeam: event.target.value});
   };
-  
+
   handleClick(e) {
     var miseAJour = new moment();
     var duration = moment.duration(miseAJour.diff(this.state.startProject));
@@ -138,11 +208,12 @@ class BoardProject extends Component {
 
   render() {
     const data = this.state.dataChart
-    data.push(      
+    data.push(
     //  [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
       [0,1800,600],
       [this.state.timeSprint, 0, 0],
     )
+    const dataTable = this.state.data;
     return (
       <div>
         <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
@@ -158,14 +229,15 @@ class BoardProject extends Component {
           }
         </Grid>
         <Board
-          data={this.state.data}
+          data={dataTable}
           draggable
           id="EditableBoard1"
           onDataChange={this.shouldReceiveNewData}
           onCardDelete={this.handleCardDelete}
+          handleDragStart={this.handleDragStart}
+          handleDragEnd={this.handleDragEnd}
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
-
         />
         <div className={"my-pretty-chart-container"}>
           <Chart

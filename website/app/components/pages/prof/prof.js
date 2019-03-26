@@ -51,37 +51,48 @@ class BoardProject extends Component {
         {
           id: 'backlog',
           title: 'Backlog',
-          cards: [{
-            description: "Test Task 1",
-            id: "e0141ad0-2e0c-11e9-af34-752500e6cd28",
-            laneId: "backlog",
-            title: "Task 1"
-          }, {
-            description: "Test Task 2",
-            id: "e0141ad0-asd2-11e9-af34-752500e6cd98",
-            laneId: "backlog",
-            title: "Task 2"
-          }
-          ]
+          cards: []
         },
         {
           id: 'done',
           title: 'Done',
           cards: []
-        },
-        {
-          id: 'inProgress',
-          title: 'In Progress',
-          cards: []
         }
       ],
     },
-    totalTasks: 2
+    totalTasks: 0
   };
 
   componentWillMount() {
     this.props.getTasks();
     this.props.getUsers();
+  }
+
+  componentDidMount() {
+    const data = this.state.data;
+    data.lanes[0].cards = [];
+    data.lanes[1].cards = [];
+    this.props.tasks.forEach(task => {
+      if (task.laneId === 'backlog') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id
+        };
+        data.lanes[0].cards.push(cardnew);
+      }
+      if (task.laneId === 'done') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id
+        };
+        data.lanes[1].cards.push(cardnew);
+      }
+    });
+    this.setState({data});
   }
 
   shouldReceiveNewData = nextData => {
@@ -98,13 +109,38 @@ class BoardProject extends Component {
     console.log(`New card added to lane ${laneId}`);
     this.setState({totalTasks: this.state.totalTasks + 1});
     const newCard = {
-      name: card.title,
+      title: card.title,
       description: card.description,
-      time: card.label,
-      laneCode: laneId
+      label: card.label,
+      laneId: laneId
     };
     this.props.createTask(newCard);
     this.props.getTasks();
+
+    const data = this.state.data;
+    data.lanes[0].cards = [];
+    data.lanes[1].cards = [];
+    this.props.tasks.forEach(task => {
+      if (task.laneId === 'backlog') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id
+        };
+        data.lanes[0].cards.push(cardnew);
+      }
+      if (task.laneId === 'done') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id
+        };
+        data.lanes[1].cards.push(cardnew);
+      }
+    });
+    this.setState({data});
   };
 
   render() {
@@ -130,6 +166,7 @@ class BoardProject extends Component {
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
           editable
+          canAddLanes
         />
         <div className={"my-pretty-chart-container"}>
           <Chart

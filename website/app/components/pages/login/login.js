@@ -33,7 +33,7 @@ class Login extends Component {
       <div>
         <input onChange={this.handleInputChangeEmail} type="email" />
         <input onChange={this.handleInputChangePassword} type="password" />
-        <Link to="/trello">
+        <Link to="/">
           <button onClick={(e) => this.handleClick(e)}>
             Se connecter
           </button>

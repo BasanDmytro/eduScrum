@@ -45,37 +45,107 @@ const styles = theme => ({
 });
 
 class BoardProject extends Component {
-  state = {
-    data: {
-      lanes: [
-        {
-          id: 'backlog',
-          title: 'Backlog',
-          cards: [{
-            description: "Test Task 1",
-            id: "e0141ad0-2e0c-11e9-af34-752500e6cd28",
-            laneId: "backlog",
-            title: "Task 1"
-          }, {
-            description: "Test Task 2",
-            id: "e0141ad0-asd2-11e9-af34-752500e6cd98",
-            laneId: "backlog",
-            title: "Task 2"
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        lanes: [
+          {
+            id: 'backlog',
+            title: 'Backlog',
+            cards: [{
+              description: "Test Task 1",
+              id: "e0141ad0-2e0c-11e9-af34-752500e6cd28",
+              laneId: "backlog",
+              title: "Task 1"
+            }, {
+              description: "Test Task 2",
+              id: "e0141ad0-asd2-11e9-af34-752500e6cd98",
+              laneId: "backlog",
+              title: "Task 2"
+            }
+            ]
+          },
+          {
+            id: 'done',
+            title: 'Done',
+            cards: []
           }
-          ]
-        },
-        {
-          id: 'done',
-          title: 'Done',
-          cards: []
+        ],
+      },
+      totalTasks: 2,
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.tasks.length !== state.data.lanes[0].cards + state.data.lanes[1].cards ) {
+      state.data.lanes[0].cards = [];
+      state.data.lanes[1].cards = [];
+      props.tasks.forEach(task => {
+        if (task.laneId === 'backlog') {
+          const cardnew = {
+            title: task.title,
+            description: task.description,
+            label: task.label,
+            id: task._id,
+            laneId: 'backlog'
+          };
+          state.data.lanes[0].cards.push(cardnew);
         }
-      ],
-    },
-    totalTasks: 2
-  };
-  componentWillMount() {
+        if (task.laneId === 'done') {
+          const cardnew = {
+            title: task.title,
+            description: task.description,
+            label: task.label,
+            id: task._id,
+            laneId: 'done'
+          };
+          state.data.lanes[1].cards.push(cardnew);
+        }
+      });
+      state.data.lanes[0].id = 'backlog';
+      state.data.lanes[1].id = 'done';
+      state.data.lanes[0].laneId = 'backlog';
+      return {
+        data: state.data
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
+  }
+
+
+
+  componentDidMount() {
     this.props.getTasks();
     this.props.getUsers();
+    const data = this.state.data;
+    data.lanes[0].cards = [];
+    data.lanes[1].cards = [];
+    this.props.tasks.forEach(task => {
+      if (task.laneId === 'backlog') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id,
+          laneId: 'backlog'
+        };
+        data.lanes[0].cards.push(cardnew);
+      }
+      if (task.laneId === 'done') {
+        const cardnew = {
+          title: task.title,
+          description: task.description,
+          label: task.label,
+          id: task._id,
+          laneId: 'done'
+        };
+        data.lanes[1].cards.push(cardnew);
+      }
+    });
+    this.setState({data});
   }
 
   shouldReceiveNewData = (card, laneId) => {
@@ -103,20 +173,8 @@ class BoardProject extends Component {
     console.log(`targetLaneId: ${targetLaneId}`)
   }
 
-  handleCardAdd = (card, laneId) => {
-    console.log(`New card added to lane ${laneId}`);
-    this.setState({totalTasks: this.state.totalTasks + 1});
-    const newCard = {
-      title: card.title,
-      description: card.description,
-      label: card.label,
-      laneId: laneId
-    };
-    this.props.createTask(newCard);
-    this.props.getTasks();
-  };
-
   render() {
+    const data = this.state.data;
     return (
       <div>
         <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
@@ -132,7 +190,7 @@ class BoardProject extends Component {
           }
         </Grid>
         <Board
-          data={this.state.data}
+          data={data}
           draggable
           id="EditableBoard1"
           onDataChange={this.shouldReceiveNewData}

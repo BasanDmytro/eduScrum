@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dbRoute = "mongodb://localhost/trello_data";
+const dbRoute = "mongodb+srv://lemansproject:refcEk-8wunny-punwyt@lemansproject-pocxh.mongodb.net/trello_data?retryWrites=true";
 
 class Database {
     constructor() {

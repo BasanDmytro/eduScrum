@@ -1,7 +1,7 @@
 import AUTH_ACTION_CONSTANTS from './authActionConstants';
 
 const defaultState = {
-  user: localStorage.getItem('loginData') || '',
+  user: JSON.parse(localStorage.getItem('loginData')).user || {},
   users: []
 };
 

@@ -6,9 +6,45 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import Admin from '../admin/admin'
 import * as authActions from "../../../redux/modules/auth/authActions";
+import Avatar from '@material-ui/core/Avatar';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+import Chip from '@material-ui/core/Chip';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+const styles = theme => ({
+  root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: theme.spacing.unit,
+  },
+  card: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 30,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 class BoardProject extends Component {
-
   state = {
     data: {
       lanes: [
@@ -69,6 +105,18 @@ class BoardProject extends Component {
   render() {
     return (
       <div>
+        <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
+          {
+            this.props.user.group.map(user => (
+              <Chip
+                avatar={<Avatar>{user.charAt(0)}</Avatar>}
+                label={user}
+                style={styles.chip}
+                color="primary"
+              />
+            ))
+          }
+        </Grid>
         <Board
           data={this.state.data}
           draggable
@@ -110,6 +158,7 @@ class BoardProject extends Component {
 const mapStateToProps = (state, props) => ({
   tasks: state.tasks.tasks,
   users: state.auth.users,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

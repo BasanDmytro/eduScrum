@@ -33,9 +33,9 @@ const styles = theme => ({
 
 
 let id = 0;
-function createData(firstName, lastName, gender, birthday, university, course, role, email) {
+function createData(firstName, lastName, group, gender, birthday, university, course, role, email) {
   id += 1;
-  return { id, firstName, lastName, gender, birthday, university, course, role, email };
+  return { id, firstName, lastName, group, gender, birthday, university, course, role, email };
 }
 
 class Admin extends Component {
@@ -59,7 +59,7 @@ class Admin extends Component {
     const rows = [];
     if (this.props && this.props.users) {
       this.props.users.forEach(user => {
-        rows.push(createData(user.firstName, user.lastName, user.gender, user.birthday, user.university, user.course, user.role, user.email));
+        rows.push(createData(user.firstName, user.lastName, user.group, user.gender, user.birthday, user.university, user.course, user.role, user.email));
       });
     }
 
@@ -70,6 +70,7 @@ class Admin extends Component {
             <TableRow>
               <TableCell>firstName</TableCell>
               <TableCell align="right">lastName</TableCell>
+              <TableCell align="right">group</TableCell>
               <TableCell align="right">gender</TableCell>
               <TableCell align="right">birthday</TableCell>
               <TableCell align="right">university</TableCell>
@@ -85,6 +86,7 @@ class Admin extends Component {
                   {row.firstName}
                 </TableCell>
                 <TableCell align="right">{row.lastName}</TableCell>
+                <TableCell align="right">{row.group}</TableCell>
                 <TableCell align="right">{row.gender}</TableCell>
                 <TableCell align="right">{row.birthday}</TableCell>
                 <TableCell align="right">{row.university}</TableCell>

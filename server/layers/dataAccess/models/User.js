@@ -16,6 +16,7 @@ const Users = new Schema(
     overview: String,
     university: String,
     course: String,
+    group: [String],
     birthday: String,
     isArchived: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false },

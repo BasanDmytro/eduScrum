@@ -14,6 +14,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import * as taskActions from "../../../redux/modules/tasks/tasksActions";
 
 const styles = theme => ({
   root: {
@@ -38,6 +39,11 @@ function createData(firstName, lastName, gender, birthday, university, course, r
 }
 
 class Admin extends Component {
+
+  componentDidMount() {
+    this.props.getUsers();
+  }
+
   render() {
     const styles = theme => ({
       root: {
@@ -94,7 +100,18 @@ class Admin extends Component {
   }
 }
 
+const mapStateToProps = (state, props) => ({
+  tasks: state.tasks.tasks,
+  users: state.auth.users,
+});
 
-export default Admin;
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getTasks: taskActions.getTasks,
+  createTask: taskActions.createTask,
+  updateTask: taskActions.updateTask,
+  getUsers: authActions.getUsers,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);
 
 

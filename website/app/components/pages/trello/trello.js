@@ -69,10 +69,6 @@ class BoardProject extends Component {
   render() {
     return (
       <div>
-        <Admin
-          getUsers={this.props.getUsers}
-          users={this.props.users}
-        />
         <Board
           data={this.state.data}
           draggable

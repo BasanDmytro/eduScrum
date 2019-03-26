@@ -8,6 +8,7 @@ import Login from '../components/pages/login/login'
 import Registration from '../components/pages/registration/registration'
 import Info from '../components/pages/info/info'
 import BoardProject from '../components/pages/trello/trello'
+import Admin from '../components/pages/admin/admin'
 import * as authActions from "../redux/modules/auth/authActions";
 
 const RouteWithHeader = ({component: Component, ...rest}) => (
@@ -30,6 +31,7 @@ class AppComponent extends React.Component {
               <Route path="/trello" component={BoardProject} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Registration} />
+              <Route path="/admin" component={Admin} />
               <Route exact path="/" render={() => <Redirect to="/" component={Info} />} />
               <Route component={NotFoundPage} />
             </Switch>

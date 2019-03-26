@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7faa9cbd-ee42-42b2-b6c5-8bcd2d1058db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/layers/dataAccess/models/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/layers/dataAccess/models/Task.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/public/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/public/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/app/components/PublicHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/website/app/components/PublicHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/app/components/pages/login/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/website/app/components/pages/login/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/app/components/pages/prof/prof.js" beforeDir="false" afterPath="$PROJECT_DIR$/website/app/components/pages/prof/prof.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/app/components/pages/trello/trello.js" beforeDir="false" afterPath="$PROJECT_DIR$/website/app/components/pages/trello/trello.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/app/redux/modules/auth/authReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/website/app/redux/modules/auth/authReducer.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,7 +26,7 @@
         <entry file="file://$PROJECT_DIR$/website/app/components/pages/prof/prof.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="413">
-              <caret line="107" column="37" lean-forward="true" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+              <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -34,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/website/app/components/pages/login/login.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="825">
-              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+              <caret line="55" selection-start-line="55" selection-end-line="55" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -70,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/website/app/redux/modules/auth/authReducer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="16" column="51" lean-forward="true" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+              <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -87,8 +91,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/website/app/components/pages/trello/trello.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="104" column="38" lean-forward="true" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
+            <state relative-caret-position="680">
+              <caret line="190" selection-start-line="190" selection-end-line="190" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -489,7 +493,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87581000" />
+    <option name="totallyTimeSpent" value="87856000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -828,14 +832,14 @@
     <entry file="file://$PROJECT_DIR$/website/app/redux/modules/auth/authReducer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="51" lean-forward="true" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+          <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/website/app/components/pages/login/login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="825">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -875,7 +879,7 @@
     <entry file="file://$PROJECT_DIR$/website/app/components/pages/prof/prof.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="413">
-          <caret line="107" column="37" lean-forward="true" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+          <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -884,8 +888,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/website/app/components/pages/trello/trello.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="104" column="38" lean-forward="true" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
+        <state relative-caret-position="680">
+          <caret line="190" selection-start-line="190" selection-end-line="190" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>

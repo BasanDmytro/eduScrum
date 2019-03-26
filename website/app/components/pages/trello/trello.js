@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import moment from "moment";
 
 const styles = theme => ({
   root: {
@@ -74,8 +75,17 @@ class BoardProject extends Component {
         ],
       },
       totalTasks: 2,
+      totalLabel: 60,
+      totalLabelDone: 0,
+      timeSprint: 0,
+      totalTeam: 1,
+      startProject: new moment(),
+      dataChart:[
+        ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
+      ]
     };
   }
+
 
   static getDerivedStateFromProps(props, state) {
     if (props.tasks.length !== state.data.lanes[0].cards + state.data.lanes[1].cards ) {
@@ -103,19 +113,12 @@ class BoardProject extends Component {
           state.data.lanes[1].cards.push(cardnew);
         }
       });
-      state.data.lanes[0].id = 'backlog';
-      state.data.lanes[1].id = 'done';
-      state.data.lanes[0].laneId = 'backlog';
       return {
         data: state.data
-      };
+      }
     }
-
-    // Return null to indicate no change to state.
     return null;
-  }
-
-
+  };
 
   componentDidMount() {
     this.props.getTasks();
@@ -159,22 +162,58 @@ class BoardProject extends Component {
     console.log(`Card: ${cardId} deleted from lane: ${laneId}`)
   };
 
+  handleCardAdd = (card, laneId) => {
+    console.log(`New card added to lane ${laneId}`);
+    this.setState({totalTasks: this.state.totalTasks + 1});
+    this.setState({totalLabel: this.state.totalLabel + parseInt(card.label)});
+    const newCard = {
+      name: card.title,
+      description: card.description,
+      time: card.label,
+      laneCode: laneId
+    };
+    this.props.createTask(newCard);
+    this.props.getTasks();
+  };
 
   handleDragStart = (cardId, laneId) => {
     console.log('drag started')
     console.log(`cardId: ${cardId}`)
     console.log(`laneId: ${laneId}`)
-  }
+  };
 
   handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
     console.log('drag ended')
     console.log(`cardId: ${cardId}`)
     console.log(`sourceLaneId: ${sourceLaneId}`)
     console.log(`targetLaneId: ${targetLaneId}`)
+  };
+
+  handleInputChangeTimeSprint = (event) => {
+    this.setState({timeSprint: event.target.value});
+  };
+
+  handleInputChangeTotalTeam = (event) => {
+    this.setState({totalTeam: event.target.value});
+  };
+
+  handleClick(e) {
+    var miseAJour = new moment();
+    var duration = moment.duration(miseAJour.diff(this.state.startProject));
+    this.state.dataChart.push(
+      [1000,1000,1000]
+      //[((duration.get('hours')*60)+duration.get('minutes'))/60, (this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam))]
+    );
   }
 
   render() {
-    const data = this.state.data;
+    const data = this.state.dataChart
+    data.push(
+    //  [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
+      [0,1800,600],
+      [this.state.timeSprint, 0, 0],
+    )
+    const dataTable = this.state.data;
     return (
       <div>
         <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
@@ -190,7 +229,7 @@ class BoardProject extends Component {
           }
         </Grid>
         <Board
-          data={data}
+          data={dataTable}
           draggable
           id="EditableBoard1"
           onDataChange={this.shouldReceiveNewData}
@@ -206,11 +245,7 @@ class BoardProject extends Component {
             height={'400px'}
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
-            data={[
-              ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
-              [this.state.totalTasks - this.state.totalTasks, this.state.totalTasks, this.state.totalTasks],
-              [this.state.totalTasks, this.state.totalTasks - this.state.totalTasks, 0],
-            ]}
+            data={data}
             options={{
               hAxis: {
                 title: 'Time',
@@ -222,6 +257,13 @@ class BoardProject extends Component {
             rootProps={{ 'data-testid': '1' }}
           />
         </div>
+        <div>
+          <input onChange={this.handleInputChangeTotalTeam} />
+          <input onChange={this.handleInputChangeTimeSprint} />
+        </div>
+        <button onClick={(e) => this.handleClick(e)}>
+            Mise à jour
+          </button>
       </div>
     )
   }

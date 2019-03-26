@@ -84,7 +84,10 @@ class BoardProject extends Component {
     totalLabelDone: 0,
     timeSprint: 0,
     totalTeam: 1,
-    startProject: new moment()
+    startProject: new moment(),
+    dataChart:[
+      ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
+    ]
   };
 
   componentWillMount() {
@@ -105,6 +108,7 @@ class BoardProject extends Component {
   handleCardAdd = (card, laneId) => {
     console.log(`New card added to lane ${laneId}`);
     this.setState({totalTasks: this.state.totalTasks + 1});
+    this.setState({totalLabel: this.state.totalLabel + parseInt(card.label)});
     const newCard = {
       name: card.title,
       description: card.description,
@@ -123,7 +127,22 @@ class BoardProject extends Component {
     this.setState({totalTeam: event.target.value});
   };
   
+  handleClick(e) {
+    var miseAJour = new moment();
+    var duration = moment.duration(miseAJour.diff(this.state.startProject));
+    this.state.dataChart.push(
+      [1000,1000,1000]
+      //[((duration.get('hours')*60)+duration.get('minutes'))/60, (this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam))]
+    );
+  }
+
   render() {
+    const data = this.state.dataChart
+    data.push(      
+    //  [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
+      [0,1800,600],
+      [this.state.timeSprint, 0, 0],
+    )
     return (
       <div>
         <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
@@ -154,12 +173,7 @@ class BoardProject extends Component {
             height={'400px'}
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
-            data={[
-              ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
-              [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
-    //        [((duration.get('hours')*60)+duration.get('minutes'))/60, (this.state.totalTeam*this.state.timeSprint*60*((2/3)*this.state.timeSprint), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
-              [this.state.timeSprint, 0, 0],
-            ]}
+            data={data}
             options={{
               hAxis: {
                 title: 'Time',
@@ -175,6 +189,9 @@ class BoardProject extends Component {
           <input onChange={this.handleInputChangeTotalTeam} />
           <input onChange={this.handleInputChangeTimeSprint} />
         </div>
+        <button onClick={(e) => this.handleClick(e)}>
+            Mise à jour
+          </button>
       </div>
     )
   }

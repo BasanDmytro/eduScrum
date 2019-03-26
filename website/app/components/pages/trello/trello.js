@@ -130,7 +130,7 @@ class BoardProject extends Component {
           onCardDelete={this.handleCardDelete}
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
-          editable
+
         />
         <div className={"my-pretty-chart-container"}>
           <Chart

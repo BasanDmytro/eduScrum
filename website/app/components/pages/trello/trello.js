@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import moment from "moment";
 
 const styles = theme => ({
   root: {
@@ -55,12 +56,14 @@ class BoardProject extends Component {
             description: "Test Task 1",
             id: "e0141ad0-2e0c-11e9-af34-752500e6cd28",
             laneId: "backlog",
-            title: "Task 1"
+            title: "Task 1",
+            label: 45
           }, {
             description: "Test Task 2",
             id: "e0141ad0-asd2-11e9-af34-752500e6cd98",
             laneId: "backlog",
-            title: "Task 2"
+            title: "Task 2",
+            label: 15
           }
           ]
         },
@@ -76,7 +79,12 @@ class BoardProject extends Component {
         }
       ],
     },
-    totalTasks: 2
+    totalTasks: 2,
+    totalLabel: 60,
+    totalLabelDone: 0,
+    timeSprint: 0,
+    totalTeam: 1,
+    startProject: new moment()
   };
 
   componentWillMount() {
@@ -107,6 +115,14 @@ class BoardProject extends Component {
     this.props.getTasks();
   };
 
+  handleInputChangeTimeSprint = (event) => {
+    this.setState({timeSprint: event.target.value});
+  };
+
+  handleInputChangeTotalTeam = (event) => {
+    this.setState({totalTeam: event.target.value});
+  };
+  
   render() {
     return (
       <div>
@@ -140,8 +156,9 @@ class BoardProject extends Component {
             loader={<div>Loading Chart</div>}
             data={[
               ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
-              [this.state.totalTasks - this.state.totalTasks, this.state.totalTasks, this.state.totalTasks],
-              [this.state.totalTasks, this.state.totalTasks - this.state.totalTasks, 0],
+              [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
+    //        [((duration.get('hours')*60)+duration.get('minutes'))/60, (this.state.totalTeam*this.state.timeSprint*60*((2/3)*this.state.timeSprint), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
+              [this.state.timeSprint, 0, 0],
             ]}
             options={{
               hAxis: {
@@ -153,6 +170,10 @@ class BoardProject extends Component {
             }}
             rootProps={{ 'data-testid': '1' }}
           />
+        </div>
+        <div>
+          <input onChange={this.handleInputChangeTotalTeam} />
+          <input onChange={this.handleInputChangeTimeSprint} />
         </div>
       </div>
     )

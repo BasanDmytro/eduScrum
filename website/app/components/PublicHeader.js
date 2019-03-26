@@ -26,7 +26,7 @@ class PublicHeader extends React.Component {
             <Toolbar className="top-toolbar">
               <div className="left-action">
                 <Link to="/trello" style={{color: 'white'}}>
-                  EduScrum
+                  Student
                 </Link>
 
                 <Link to="/admin" style={{color: 'white', 'margin-left': '20px'}}>
@@ -38,11 +38,11 @@ class PublicHeader extends React.Component {
                 </Link>
               </div>
 
-              <div className="right-action" style={{'margin-left': '85%', color: 'red'}}>
+              <div className="right-action" style={{'margin-left': '65%', color: 'red'}}>
                 {!this.props.user ?
                   <div>
-                    <Link to="/login"><button>Login</button></Link>
-                    <Link to="/signup"><button>Sign Up</button></Link>
+                    <Link to="/login"  style={{'margin-left': '20px'}}><button>Login</button></Link>
+                    <Link to="/signup" style={{'margin-left': '20px'}}><button>Sign Up</button></Link>
                   </div>
                   :
                   <button onClick={() => this.props.logout()}>Logout</button>

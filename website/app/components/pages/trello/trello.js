@@ -75,7 +75,7 @@ class BoardProject extends Component {
         ],
       },
       totalTasks: 2,
-      totalLabel: 60,
+      totalLabel: 0,
       totalLabelDone: 0,
       timeSprint: 0,
       totalTeam: 1,
@@ -158,14 +158,12 @@ class BoardProject extends Component {
   };
 
   handleCardDelete = (cardId, laneId) => {
-
     console.log(`Card: ${cardId} deleted from lane: ${laneId}`)
   };
 
   handleCardAdd = (card, laneId) => {
     console.log(`New card added to lane ${laneId}`);
     this.setState({totalTasks: this.state.totalTasks + 1});
-    this.setState({totalLabel: this.state.totalLabel + parseInt(card.label)});
     const newCard = {
       name: card.title,
       description: card.description,
@@ -197,20 +195,45 @@ class BoardProject extends Component {
     this.setState({totalTeam: event.target.value});
   };
 
-  handleClick(e) {
+   labelUpdate = ( cards) => {
+    let totalLabel = this.state.totalLabel
+    cards.forEach(card => {
+      totalLabel += +card.label
+    });
+    this.setState({totalLabel: totalLabel}, function () {
+      console.log(this.state.totalLabel);
+  });
+    
+  }
+
+   handleClick(e) {
+    let totalLabel = this.state.totalLabel
+    const lanes = (this.state && this.state.data && this.state.data.lanes) || []
+    console.log(lanes)
+    lanes.forEach(lane => {
+      if (lane.cards.length > 0) {
+        this.labelUpdate(lane.cards)
+      }
+    })
+    console.log(this.state.totalLabel)
     var miseAJour = new moment();
     var duration = moment.duration(miseAJour.diff(this.state.startProject));
     this.state.dataChart.push(
-      [1000,1000,1000]
-      //[((duration.get('hours')*60)+duration.get('minutes'))/60, (this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam))]
+      [((duration.get('hours')*60)+duration.get('minutes'))/60, this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)]
     );
+    console.log("a")
+    console.log(((duration.get('hours')*60)+duration.get('minutes'))/60)
+    console.log(this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60))
+    console.log(this.state.totalLabel*this.state.totalTeam-this.state.totalLabelDone*this.state.totalTeam)
+    console.log("b")
+    this.forceUpdate()
   }
 
   render() {
+    console.log(this.state.totalLabel)
     const data = this.state.dataChart
     data.push(
-    //  [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
-      [0,1800,600],
+      [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
       [this.state.timeSprint, 0, 0],
     )
     const dataTable = this.state.data;
@@ -247,6 +270,8 @@ class BoardProject extends Component {
             loader={<div>Loading Chart</div>}
             data={data}
             options={{
+            
+              isStacked: true,
               hAxis: {
                 title: 'Time',
               },

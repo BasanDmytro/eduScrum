@@ -15,6 +15,7 @@ class TaskService {
   }
 
   async createTask(task) {
+    console.log(task);
     const taskObj = Object.assign(task, {
       isArchived: false,
       createdAt: new Date(),
@@ -24,7 +25,7 @@ class TaskService {
   }
 
   async updateTask(taskId, task) {
-    await TaskRepository.updateJob(taskId, task);
+    await TaskRepository.updateTask(taskId, task);
   }
 
   async archive(taskId) {

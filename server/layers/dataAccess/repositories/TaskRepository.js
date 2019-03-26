@@ -32,7 +32,7 @@ class TaskRepository extends BaseRepository {
     );
   }
 
-  async updateJob(taskId, task) {
+  async updateTask(taskId, task) {
     return this.update({ _id: taskId }, { $set: task });
   }
 }

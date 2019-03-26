@@ -13,7 +13,9 @@ router.head('/', async (req, res) => { // count of tasks
 
 router.get('/', async (req, res) => {
   try {
+    console.log(req.query);
     const tasks = await TaskService.getTasks(req.query);
+    console.log(tasks);
     res.status(200).send(tasks);
   } catch (err) {
     console.log(err);
@@ -22,9 +24,26 @@ router.get('/', async (req, res) => {
 
 router.post('/create', async (req, res) => {
   const { body: data } = req;
-  const { job: taskObj } = data;
+  console.log(data);
+  const { task: taskObj } = data;
   try {
     const taskId = await TaskService.createTask(taskObj);
+    res.status(201).send(taskId);
+  } catch (err) {
+    if (err.name === 'MongoError' && err.code === 11000) {
+      res.status(400).send('cannot create duplicate task');
+    } else {
+      console.log(err);
+    }
+  }
+});
+
+router.post('/update', async (req, res) => {
+  const { body: data } = req;
+  console.log(data);
+  const { task: taskObj } = data;
+  try {
+    const taskId = await TaskService.updateTask(taskObj._id, taskObj);
     res.status(201).send(taskId);
   } catch (err) {
     if (err.name === 'MongoError' && err.code === 11000) {

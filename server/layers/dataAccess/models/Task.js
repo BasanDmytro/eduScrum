@@ -7,9 +7,11 @@ const Task = new Schema(
     _id: String,
     name: String,
     description: String,
-    time: Date,
+    time: String,
     isArchived: Boolean,
+    status: String,
     createdAt: Date,
+    laneCode: String
   },
   { timestamps: true }
 );

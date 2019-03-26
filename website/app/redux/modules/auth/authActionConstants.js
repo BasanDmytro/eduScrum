@@ -1,5 +1,6 @@
 export default {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
-  SIGNUP: 'SIGNUP'
+  SIGNUP: 'SIGNUP',
+  GET_USERS: 'GET_USERS'
 };

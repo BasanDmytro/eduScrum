@@ -25,7 +25,7 @@ class PublicHeader extends React.Component {
           <AppBar className="main-header" id="main-header">
             <Toolbar className="top-toolbar">
               <div className="left-action">
-                <Link to="/" style={{color: 'white'}}>
+                <Link to="/trello" style={{color: 'white'}}>
                   EduScrum
                 </Link>
               </div>

@@ -4,6 +4,8 @@ import { Chart } from "react-google-charts";
 import * as taskActions from '../../../redux/modules/tasks/tasksActions';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import Admin from '../admin/admin'
+import * as authActions from "../../../redux/modules/auth/authActions";
 
 class BoardProject extends Component {
 
@@ -38,6 +40,7 @@ class BoardProject extends Component {
 
   componentWillMount() {
     this.props.getTasks();
+    this.props.getUsers();
   }
 
   shouldReceiveNewData = nextData => {
@@ -64,9 +67,12 @@ class BoardProject extends Component {
   };
 
   render() {
-    console.log(this);
     return (
       <div>
+        <Admin
+          getUsers={this.props.getUsers}
+          users={this.props.users}
+        />
         <Board
           data={this.state.data}
           draggable
@@ -107,12 +113,14 @@ class BoardProject extends Component {
 
 const mapStateToProps = (state, props) => ({
   tasks: state.tasks.tasks,
+  users: state.auth.users,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getTasks: taskActions.getTasks,
   createTask: taskActions.createTask,
   updateTask: taskActions.updateTask,
+  getUsers: authActions.getUsers,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardProject);

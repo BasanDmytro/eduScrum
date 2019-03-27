@@ -1,0 +1,24 @@
+#buttonIns {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button{
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+}
+/* Add a hover effect for buttons */
+button:hover {
+  opacity: 0.8;
+}
+
+#buttonCo{
+  background-color: #DCDCDC ;
+  color: black;
+}
+
+#buttonDec{
+  background-color: red ;
+  color: white;
+}

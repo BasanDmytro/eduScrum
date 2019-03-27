@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {Link, Redirect} from "react-router-dom";
 import Info from "../info/info";
 import BoardProject from '../trello/trello'
+import '../../../assets/styles/login.css';
 
 class Login extends Component {
 
@@ -30,11 +31,12 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <input onChange={this.handleInputChangeEmail} type="email" />
-        <input onChange={this.handleInputChangePassword} type="password" />
-        <Link to="/">
-          <button onClick={(e) => this.handleClick(e)}>
+      <div id="form">
+        <h2 id="titre">Connexion :</h2>
+        <input onChange={this.handleInputChangeEmail} class="imputText" type="email" placeholder="Entrez votre adresse mail" />
+        <input onChange={this.handleInputChangePassword} class="imputText" type="password" placeholder="Entrez votre mot de passe" />
+        <Link to="/trello">
+          <button id="valider" onClick={(e) => this.handleClick(e)}>
             Se connecter
           </button>
         </Link>
@@ -52,4 +54,3 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-

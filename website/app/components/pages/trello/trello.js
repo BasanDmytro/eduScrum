@@ -203,7 +203,7 @@ class BoardProject extends Component {
     this.setState({totalLabel: totalLabel}, function () {
       console.log(this.state.totalLabel);
   });
-    
+
   }
 
    handleClick(e) {
@@ -232,6 +232,7 @@ class BoardProject extends Component {
   render() {
     console.log(this.state.totalLabel)
     const data = this.state.dataChart
+    const group = (this.props && this.props.user && this.props.user.group) || [];
     data.push(
       [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
       [this.state.timeSprint, 0, 0],
@@ -241,7 +242,7 @@ class BoardProject extends Component {
       <div>
         <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
           {
-            this.props.user.group.map(user => (
+            group.map(user => (
               <Chip
                 avatar={<Avatar>{user.charAt(0)}</Avatar>}
                 label={user}
@@ -270,7 +271,7 @@ class BoardProject extends Component {
             loader={<div>Loading Chart</div>}
             data={data}
             options={{
-            
+
               isStacked: true,
               hAxis: {
                 title: 'Time',

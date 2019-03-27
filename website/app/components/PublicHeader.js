@@ -12,7 +12,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-
+import '../assets/styles/PublicHeader.css';
 
 // eslint-disable-next-line
 class PublicHeader extends React.Component {
@@ -25,34 +25,27 @@ class PublicHeader extends React.Component {
           <AppBar className="main-header" id="main-header">
             <Toolbar className="top-toolbar">
               <div className="left-action">
-                {
-                  this.props.user ?
-                    <div>
-                      <Link to="/trello" style={{color: 'white'}}>
-                        Student
-                      </Link>
+                <Link to="/trello" style={{color: 'white'}}>
+                  Student
+                </Link>
 
-                      <Link to="/admin" style={{color: 'white', 'margin-left': '20px'}}>
-                        Admin
-                      </Link>
+                <Link to="/admin" style={{color: 'white', 'margin-left': '20px'}}>
+                  Admin
+                </Link>
 
-                      <Link to="/prof" style={{color: 'white', 'margin-left': '20px'}}>
-                        Professor
-                      </Link>
-                    </div> : ''
-
-                }
-
+                <Link to="/prof" style={{color: 'white', 'margin-left': '20px'}}>
+                  Professor
+                </Link>
               </div>
 
               <div className="right-action" style={{'margin-left': '65%', color: 'red'}}>
                 {!this.props.user ?
                   <div>
-                    <Link to="/login"  style={{'margin-left': '20px'}}><button>Login</button></Link>
-                    <Link to="/signup" style={{'margin-left': '20px'}}><button>Sign Up</button></Link>
+                    <Link to="/login"  style={{'margin-left': '20px'}}><button class="button" id="buttonCo">Connexion</button></Link>
+                    <Link to="/signup" style={{'margin-left': '20px'}}><button class="button" id="buttonIns">S'inscrire</button></Link>
                   </div>
                   :
-                  <Link to="/"  style={{'margin-left': '20px'}}><button onClick={() => this.props.logout()}>Logout</button></Link>
+                  <button class="button" id="buttonDec" onClick={() => this.props.logout()}>Se déconnecter</button>
                 }
               </div>
             </Toolbar>

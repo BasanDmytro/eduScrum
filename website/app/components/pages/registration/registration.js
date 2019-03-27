@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import '../../../assets/styles/registration.css';
 class Registration extends Component {
 
   state = {
@@ -8,6 +8,8 @@ class Registration extends Component {
     email: '',
     password: '',
     passwordConfirmation: '',
+    gender: '',
+    birthday: '',
   };
 
   handleInputChangeFirstName = (event) => {
@@ -30,6 +32,14 @@ class Registration extends Component {
     this.setState({passwordConfirmation: event.target.value});
   };
 
+  handleInputChangeGender = (event) => {
+    this.setState({gender: event.target.value});
+  };
+
+  handleInputChangeBirthday = (event) => {
+    this.setState({birthday: event.target.value});
+  };
+
   handleSubmit(event) {
     alert('Création compte: ' + this.state.firstName);
     event.preventDefault();
@@ -45,28 +55,46 @@ class Registration extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form id="form" onSubmit={this.handleSubmit}>
+      <h2 id="titre">S'inscrire :</h2>
       <label>
         Prénom:
-        <input type="text" onChange={this.handleInputChangeFirstName} name="Prénom"/>
+        <input type="text" class="zoneText" onChange={this.handleInputChangeFirstName} name="Prénom"/>
       </label>
       <label>
-        Name:
-        <input type="text" onChange={this.handleInputChangeLastName} />
+        Nom:
+        <input type="text" class="zoneText" onChange={this.handleInputChangeLastName} />
       </label>
       <label>
         Adresse mail:
-        <input type="email" onChange={this.handleInputChangeEmail} />
+        <input type="email"class="zoneText"  onChange={this.handleInputChangeEmail} />
       </label>
       <label>
         Mot de passe:
-        <input type="password" onChange={this.handleInputChangePassword} />
+        <input type="password" class="zoneText" onChange={this.handleInputChangePassword} />
       </label>
       <label>
         Confirmation du mot de passe:
-        <input type="password" style={{color: this.checkPassword()}} onChange={this.handleInputChangePasswordConfirmation} />
+        <input type="password" style={{color: this.checkPassword()}} class="zoneText" onChange={this.handleInputChangePasswordConfirmation} />
       </label>
-      <input type="submit" value="S'inscrire" />
+      <label>
+        Sexe:
+        <label class="container">Homme
+          <input type="radio" name ="gender" onclick={this.handleInputChangeGender}/>
+          <span class="checkmark"></span>
+        </label>
+          <label class="container">Femme
+            <input type="radio"  name ="gender" onclick={this.handleInputChangeGender} />
+            <span class="checkmark"></span>
+        </label>
+      </label>
+      <br/><br/>
+      <label>
+        Date de naissance :
+        <input type="date" id="dateNaissance" onChange={this.handleInputChangeBirthday} />
+      </label>
+      <br/><br/>
+      <input type="submit" id="valider" value="S'inscrire" />
     </form>
     )
   }

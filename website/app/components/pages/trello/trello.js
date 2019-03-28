@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import moment from "moment";
+import BDC from "../BDC.js";
 
 const styles = theme => ({
   root: {
@@ -77,13 +78,7 @@ class BoardProject extends Component {
       totalTasks: 2,
       totalLabel: 0,
       totalLabelDone: 15,
-      timeSprint: 0,
-      totalTeam: 1,
-      startProject: new moment(),
-      dataChart:[
-        ['x', 'Ideal Tasks Remaining', 'Actual Tasks Remaining'],
-        [0,0,0]
-      ]
+      startProject: new moment()
     };
   }
 
@@ -282,23 +277,10 @@ class BoardProject extends Component {
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
         />
         <div className={"my-pretty-chart-container"}>
-          <Chart
-            width={'600px'}
-            height={'400px'}
-            chartType="LineChart"
-            loader={<div>Loading Chart</div>}
-            data={data}
-            options={{
-
-              isStacked: true,
-              hAxis: {
-                title: 'Time',
-              },
-              vAxis: {
-                title: 'Popularity',
-              },
-            }}
-            rootProps={{ 'data-testid': '1' }}
+          <BDC
+            totalLabel={this.state.totalLabel}
+            totalLabelDone={this.state.totalLabelDone}       
+            startProject={this.state.startProject}   
           />
         </div>
         <div>

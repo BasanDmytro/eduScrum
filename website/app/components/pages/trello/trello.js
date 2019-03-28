@@ -201,44 +201,25 @@ class BoardProject extends Component {
     });
     this.setState({totalLabel: totalLabel}, function () {
       console.log(this.state.totalLabel);
-  });
-
-  }
+    });
+  };
 
 
   handleClickMAJ(e) {
-    console.log("rentrer maj")
-    this.setState({draw: true})
-    let totalLabel = this.state.totalLabel
-    this.setState({totalLabel: 0})
-    const lanes = (this.state && this.state.data && this.state.data.lanes) || []
-    console.log(lanes)
+    console.log("rentrer maj");
+    this.setState({totalLabel: 0});
+    const lanes = (this.state && this.state.data && this.state.data.lanes) || [];
     lanes.forEach(lane => {
       if (lane.cards.length > 0) {
         this.labelUpdate(lane.cards)
       }
-    })
-    console.log(this.state.totalLabel)
-    var miseAJour = new moment();
-    var duration = moment.duration(miseAJour.diff(this.state.startProject));
-    setTimeout(() => {
-      console.log(this.state.totalTeam)
-      console.log(((duration.get('hours')*60)+duration.get('minutes'))/60)
-      console.log("b")
-      console.log(this.state.totalTeam*this.state.timeSprint*60)
-      console.log(((duration.get('hours')*60)+duration.get('minutes'))/60)
-      console.log(this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60))
-      console.log("c")
-      console.log(this.state.totalLabel*this.state.totalTeam)
-      console.log(this.state.totalLabelDone*this.state.totalTeam)
-      console.log(this.state.totalLabel*this.state.totalTeam-this.state.totalLabelDone*this.state.totalTeam)
-      console.log("d")
-      this.forceUpdate()
-    }, 1000)
+    });
+    this.setState({draw: true});
+    let miseAJour = new moment();
+    let duration = moment.duration(miseAJour.diff(this.state.startProject));
   }
 
   render() {
-    console.log(this.state.totalLabel)
     const group = (this.props && this.props.user && this.props.user.group) || [];
     const dataTable = this.state.data;
     return (
@@ -270,14 +251,15 @@ class BoardProject extends Component {
         {
           this.state.draw ?
           <BDC
+            ll={console.log(this.state.totalLabel)}
             totalLabel={this.state.totalLabel}
-            totalLabelDone={this.state.totalLabelDone}       
+            totalLabelDone={this.state.totalLabelDone}
             startProject={this.state.startProject}
             totalTeam={this.state.totalTeam}
             timeSprint={this.state.timeSprint}
           />:""
         }
-          
+
         </div>
         <div>
           <input onChange={this.handleInputChangeTotalTeam} />

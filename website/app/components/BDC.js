@@ -20,7 +20,7 @@ class BDC extends Component {
     }
   }
 
-  
+
   componentDidMount(){
       this.setState({totalLabel: this.props.totalLabel})
       this.setState({totalLabelDone: this.props.totalLabelDone})
@@ -37,32 +37,30 @@ class BDC extends Component {
         this.setState({startProject: nextProps.startProject})
         this.setState({timeSprint: nextProps.timeSprint})
         this.setState({totalTeam: nextProps.totalTeam})
-        this.forceUpdate()
+      this.aaa();
+
     }
+  }
+
+  aaa( ) {
+    const data = this.state.dataChart
+    var miseAJour = new moment();
+    var duration = moment.duration(miseAJour.diff(this.state.startProject));
+    data.push([((duration.get('hours')*60)+duration.get('minutes'))/60, this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60),(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)]);
+    this.setState({dataChart: data});
   }
 
   render() {
     const data = this.state.dataChart
-    console.log(data)
+
     if(this.state.totalTeam !== 0 && this.state.timeSprint !== 0 && this.state.dataChart.length === 2){
+      console.log('LOL');
+      console.log(this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam, this.state.timeSprint);
         data.pop()
         data.push(
             [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
             [this.state.timeSprint, 0, 0]
         )
-    }
-    if(this.state.update){
-        /*      console.log(this.state.totalTeam)
-            console.log(((duration.get('hours')*60)+duration.get('minutes'))/60)
-            console.log("b")
-            console.log(this.state.totalTeam*this.state.timeSprint*60)
-            console.log(((duration.get('hours')*60)+duration.get('minutes'))/60)
-            console.log(this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60))
-            console.log("c")
-            console.log(this.state.totalLabel*this.state.totalTeam)
-            console.log(this.state.totalLabelDone*this.state.totalTeam)
-            console.log(this.state.totalLabel*this.state.totalTeam-this.state.totalLabelDone*this.state.totalTeam)*/
-                       
     }
     console.log(data)
     return(

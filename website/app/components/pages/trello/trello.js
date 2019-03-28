@@ -88,7 +88,13 @@ class BoardProject extends Component {
 
 
   static getDerivedStateFromProps(props, state) {
-
+    let countDoneProps = 0;
+    props.tasks.forEach(task => {
+      if (task.laneId === 'done') {
+        countDoneProps++;
+      }
+    });
+    if (props.tasks.length !== state.data.lanes[0].cards + state.data.lanes[1].cards || countDoneProps !==  state.data.lanes[1].cards ) {
       state.data.lanes[0].cards = [];
       state.data.lanes[1].cards = [];
       props.tasks.forEach(task => {
@@ -116,7 +122,8 @@ class BoardProject extends Component {
       return {
         data: state.data
       }
-
+    }
+    return null;
   };
 
   componentDidMount() {
@@ -179,24 +186,12 @@ class BoardProject extends Component {
   };
 
   handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
-    console.log('drag ended')
-    console.log(`cardId: ${cardId}`)
-    console.log(`sourceLaneId: ${sourceLaneId}`)
-    console.log(`targetLaneId: ${targetLaneId}`)
-
-    const data = this.state.data;
-
     const card = this.state.data.lanes[0].cards.find(x => x.id === cardId);
     card._id = card.id;
     card.laneId = 'done';
     this.props.updateTask(card);
 
-    data.lanes[1].cards.push(card);
-
-    this.labelDoneUpdate(data.lanes[1].cards)
-    this.setState({data}, () => {
-      console.log(this.state.data);
-    })
+    this.props.getTasks();
   };
 
   handleInputChangeTimeSprint = (event) => {
@@ -212,6 +207,7 @@ class BoardProject extends Component {
     cards.forEach(card => {
       totalLabelDone += +card.label
     });
+    console.log(totalLabelDone);
     this.setState({totalLabel: totalLabelDone}, function () {
       console.log(this.state.totalLabelDone);
     });
@@ -229,12 +225,11 @@ class BoardProject extends Component {
 
 
   handleClickMAJ(e) {
+    this.props.getTasks();
     let count = this.state.count
     count++
-    console.log(this.state.data)
     const cards = this.state.data.lanes.find(x => x.id === 'done').cards;
-    console.log(cards)
-    this.labelDoneUpdate(this.state.data.lanes[1].cards)
+    this.labelDoneUpdate(cards);
     const lanes = (this.state && this.state.data && this.state.data.lanes) || [];
       lanes.forEach(lane => {
         if (lane.cards.length > 0) {
@@ -290,7 +285,7 @@ class BoardProject extends Component {
           <input onChange={this.handleInputChangeTotalTeam} />
           <input onChange={this.handleInputChangeTimeSprint} />
         </div>
-        <button onClick={(e) => this.handleClickMAJ(e)}>
+        <button onClick={(e) => {this.handleClickMAJ(e)} }>
             Mise à jour
         </button>
       </div>

@@ -40,6 +40,10 @@ export const updateTask = (task = {}) => dispatch => {
   axios
     .post('http://localhost:3001/api/task/update', {task})
     .then(res => {
+      dispatch({
+        type: TASKS_ACTION_CONSTANTS.UPDATE,
+        payload: res.data,
+      });
 
     });
 };

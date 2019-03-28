@@ -16,6 +16,9 @@ export default (state = defaultState, action) => {
     case TASKS_ACTION_CONSTANTS.CREATE_TASK:
       return handleGetTasks(state, action.payload);
 
+    case TASKS_ACTION_CONSTANTS.UPDATE:
+      return handleUpdateTasks(state, action.payload);
+
     default:
       return state;
   }
@@ -23,6 +26,13 @@ export default (state = defaultState, action) => {
 
 function handleGetTasks(state, tasks) {
   return {...state, tasks};
+
+}
+
+function handleUpdateTasks(state, task) {
+  state.tasks.push(task)
+  return {...state};
+
 }
 
 function handleGetTasksCount(state, tasksCount) {

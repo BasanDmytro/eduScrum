@@ -30,8 +30,9 @@ class BDC extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+     
       console.log(nextProps)
-    if(nextProps.totalLabel!==this.props.totalLabel){
+    if(nextProps.count!==this.props.count){
         this.setState({totalLabel: nextProps.totalLabel})
         this.setState({totalLabelDone: nextProps.totalLabelDone})
         this.setState({startProject: nextProps.startProject})
@@ -46,7 +47,11 @@ class BDC extends Component {
     const data = this.state.dataChart
     var miseAJour = new moment();
     var duration = moment.duration(miseAJour.diff(this.state.startProject));
-    data.push([((duration.get('hours')*60)+duration.get('minutes'))/60, this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60),(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)]);
+    data.pop()
+    data.push(
+        [((duration.get('hours')*60)+duration.get('minutes'))/60, this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60),(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
+        [this.state.timeSprint,0,0]
+    )
     this.setState({dataChart: data});
   }
 

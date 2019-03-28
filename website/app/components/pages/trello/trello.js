@@ -79,9 +79,10 @@ class BoardProject extends Component {
       timeSprint: 0,
       totalTasks: 2,
       totalLabel: 0,
-      totalLabelDone: 15,
+      totalLabelDone: 0,
       startProject: new moment(),
-      draw: false
+      draw: false,
+      count: 0
     };
   }
 
@@ -194,8 +195,18 @@ class BoardProject extends Component {
     this.setState({totalTeam: parseInt(event.target.value)});
   };
 
-   labelUpdate = ( cards) => {
-    let totalLabel = this.state.totalLabel
+  labelDoneUpdate = (cards) => {
+    let totalLabelDone = 0
+    cards.forEach(card => {
+      totalLabelDone += +card.label
+    });
+    this.setState({totalLabel: totalLabelDone}, function () {
+      console.log(this.state.totalLabelDone);
+    });
+  };
+
+  labelUpdate = ( cards) => {
+    let totalLabel = 0
     cards.forEach(card => {
       totalLabel += +card.label
     });
@@ -206,17 +217,19 @@ class BoardProject extends Component {
 
 
   handleClickMAJ(e) {
-    console.log("rentrer maj");
-    this.setState({totalLabel: 0});
+    let count = this.state.count
+    count++
+    console.log(this.state.data)
+    const cards = this.state.data.lanes.find(x => x.id === 'done').cards;
+    console.log(cards)
+    this.labelDoneUpdate(this.state.data.lanes[1].cards)
     const lanes = (this.state && this.state.data && this.state.data.lanes) || [];
-    lanes.forEach(lane => {
-      if (lane.cards.length > 0) {
-        this.labelUpdate(lane.cards)
-      }
-    });
-    this.setState({draw: true});
-    let miseAJour = new moment();
-    let duration = moment.duration(miseAJour.diff(this.state.startProject));
+      lanes.forEach(lane => {
+        if (lane.cards.length > 0) {
+          this.labelUpdate(lane.cards)
+        }
+      });
+      this.setState({draw: true, count});
   }
 
   render() {
@@ -257,6 +270,7 @@ class BoardProject extends Component {
             startProject={this.state.startProject}
             totalTeam={this.state.totalTeam}
             timeSprint={this.state.timeSprint}
+            count={this.state.count}
           />:""
         }
 

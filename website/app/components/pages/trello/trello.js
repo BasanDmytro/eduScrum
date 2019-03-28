@@ -217,7 +217,7 @@ class BoardProject extends Component {
     var miseAJour = new moment();
     var duration = moment.duration(miseAJour.diff(this.state.startProject));
     setTimeout(() => {
-      console.log("a")
+      console.log(this.state.totalTeam)
       console.log(((duration.get('hours')*60)+duration.get('minutes'))/60)
       console.log("b")
       console.log(this.state.totalTeam*this.state.timeSprint*60)

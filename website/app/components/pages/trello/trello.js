@@ -208,7 +208,7 @@ class BoardProject extends Component {
       totalLabelDone += +card.label
     });
     console.log(totalLabelDone);
-    this.setState({totalLabel: totalLabelDone}, function () {
+    this.setState({totalLabelDone: totalLabelDone}, function () {
       console.log(this.state.totalLabelDone);
     });
   };
@@ -226,16 +226,22 @@ class BoardProject extends Component {
 
   handleClickMAJ(e) {
     this.props.getTasks();
+    console.log("xdcfyvgubhi")
+    console.log(this.state)
     let count = this.state.count
     count++
     const cards = this.state.data.lanes.find(x => x.id === 'done').cards;
+    const cardsBacklog = this.state.data.lanes.find(x => x.id === 'backlog').cards;
+    let allCards= []
+    cards.forEach(card=>{
+      allCards.push(card)
+    })
+    cardsBacklog.forEach(card=>{
+      allCards.push(card)
+    })
+
     this.labelDoneUpdate(cards);
-    const lanes = (this.state && this.state.data && this.state.data.lanes) || [];
-      lanes.forEach(lane => {
-        if (lane.cards.length > 0) {
-          this.labelUpdate(lane.cards)
-        }
-      });
+    this.labelUpdate(allCards);
       this.setState({draw: true, count});
   }
 

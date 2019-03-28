@@ -49,7 +49,7 @@ class BDC extends Component {
     var duration = moment.duration(miseAJour.diff(this.state.startProject));
     data.pop()
     data.push(
-        [((duration.get('hours')*60)+duration.get('minutes'))/60, this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60),(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
+        [((duration.get('hours')*60)+duration.get('minutes'))/60,(this.state.totalTeam*this.state.timeSprint*60) - this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60),(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
         [this.state.timeSprint,0,0]
     )
     this.setState({dataChart: data});
@@ -57,10 +57,7 @@ class BDC extends Component {
 
   render() {
     const data = this.state.dataChart
-
     if(this.state.totalTeam !== 0 && this.state.timeSprint !== 0 && this.state.dataChart.length === 2){
-      console.log('LOL');
-      console.log(this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam, this.state.timeSprint);
         data.pop()
         data.push(
             [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
@@ -82,7 +79,7 @@ class BDC extends Component {
                 title: 'Time',
               },
               vAxis: {
-                title: 'Popularity',
+                title: 'Remaining Effort',
               },
             }}
             rootProps={{ 'data-testid': '1' }}

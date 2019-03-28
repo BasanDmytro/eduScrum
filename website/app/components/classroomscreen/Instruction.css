@@ -1,0 +1,28 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+
+.image {
+  border-radius:100%;
+          background-color:transparent;
+          background-size:cover;
+          background-position:center;
+          border-width:0px;
+          outline:none;
+          width: 70px;
+          height: 70px;
+}
+
+
+.button {
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    outline:none;
+}
+
+#grandeImage{
+  margin-left: 3%;
+}

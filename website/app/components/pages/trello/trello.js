@@ -16,7 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import moment from "moment";
-import BDC from "../BDC.js";
+import BDC from "../../BDC.js";
 
 const styles = theme => ({
   root: {
@@ -75,10 +75,13 @@ class BoardProject extends Component {
           }
         ],
       },
+      totalTeam: 0,
+      timeSprint: 0,
       totalTasks: 2,
       totalLabel: 0,
       totalLabelDone: 15,
-      startProject: new moment()
+      startProject: new moment(),
+      draw: false
     };
   }
 
@@ -202,8 +205,10 @@ class BoardProject extends Component {
 
   }
 
-   handleClick(e) {
+
+  handleClickMAJ(e) {
     console.log("rentrer maj")
+    this.setState({draw: true})
     let totalLabel = this.state.totalLabel
     this.setState({totalLabel: 0})
     const lanes = (this.state && this.state.data && this.state.data.lanes) || []
@@ -228,28 +233,13 @@ class BoardProject extends Component {
       console.log(this.state.totalLabelDone*this.state.totalTeam)
       console.log(this.state.totalLabel*this.state.totalTeam-this.state.totalLabelDone*this.state.totalTeam)
       console.log("d")
-      this.state.dataChart.pop()
-      this.state.dataChart.push(
-        [((duration.get('hours')*60)+duration.get('minutes'))/60, this.state.totalTeam*this.state.timeSprint*60*(((duration.get('hours')*60)+duration.get('minutes'))/60), (this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
-        [this.state.timeSprint, 0, 0]
-      );
       this.forceUpdate()
     }, 1000)
   }
 
   render() {
     console.log(this.state.totalLabel)
-    const data = this.state.dataChart
     const group = (this.props && this.props.user && this.props.user.group) || [];
-    console.log(data)
-    if(this.state.totalTeam !== 0 && this.state.timeSprint !== 0 && this.state.dataChart.length === 2){
-      data.pop()
-      data.push(
-          [0, this.state.totalTeam*this.state.timeSprint*60, this.state.totalLabel*this.state.totalTeam],
-          [this.state.timeSprint, 0, 0],
-        )
-    }
-    console.log(data)
     const dataTable = this.state.data;
     return (
       <div>
@@ -277,19 +267,25 @@ class BoardProject extends Component {
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
         />
         <div className={"my-pretty-chart-container"}>
+        {
+          this.state.draw ?
           <BDC
             totalLabel={this.state.totalLabel}
             totalLabelDone={this.state.totalLabelDone}       
-            startProject={this.state.startProject}   
-          />
+            startProject={this.state.startProject}
+            totalTeam={this.state.totalTeam}
+            timeSprint={this.state.timeSprint}
+          />:""
+        }
+          
         </div>
         <div>
           <input onChange={this.handleInputChangeTotalTeam} />
           <input onChange={this.handleInputChangeTimeSprint} />
         </div>
-        <button onClick={(e) => this.handleClick(e)}>
+        <button onClick={(e) => this.handleClickMAJ(e)}>
             Mise à jour
-          </button>
+        </button>
       </div>
     )
   }

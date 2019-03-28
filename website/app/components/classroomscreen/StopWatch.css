@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f8f8f8;
+}
+
+.timerMachine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+.timerMachine h1 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    color: #999999;
+}
+
+.timer {
+    margin-bottom: .5em;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #222222;
+}
+
+.typeBlock {
+    margin-bottom: 2em;
+}
+
+.typeBlock label {
+    margin: 0 1em;
+}
+
+.player button {
+    margin: 0 1em;
+}

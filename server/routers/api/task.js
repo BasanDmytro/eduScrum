@@ -13,9 +13,7 @@ router.head('/', async (req, res) => { // count of tasks
 
 router.get('/', async (req, res) => {
   try {
-    console.log(req.query);
     const tasks = await TaskService.getTasks(req.query);
-    console.log(tasks);
     res.status(200).send(tasks);
   } catch (err) {
     console.log(err);
@@ -24,7 +22,6 @@ router.get('/', async (req, res) => {
 
 router.post('/create', async (req, res) => {
   const { body: data } = req;
-  console.log(data);
   const { task: taskObj } = data;
   try {
     const taskId = await TaskService.createTask(taskObj);

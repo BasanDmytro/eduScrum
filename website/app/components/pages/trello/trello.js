@@ -88,7 +88,7 @@ class BoardProject extends Component {
 
 
   static getDerivedStateFromProps(props, state) {
-    if (props.tasks.length !== state.data.lanes[0].cards + state.data.lanes[1].cards ) {
+
       state.data.lanes[0].cards = [];
       state.data.lanes[1].cards = [];
       props.tasks.forEach(task => {
@@ -116,8 +116,7 @@ class BoardProject extends Component {
       return {
         data: state.data
       }
-    }
-    return null;
+
   };
 
   componentDidMount() {
@@ -152,7 +151,6 @@ class BoardProject extends Component {
   }
 
   shouldReceiveNewData = (card, laneId) => {
-    console.log(card);
     console.log('Board has changed');
     console.log(laneId)
   };
@@ -185,6 +183,20 @@ class BoardProject extends Component {
     console.log(`cardId: ${cardId}`)
     console.log(`sourceLaneId: ${sourceLaneId}`)
     console.log(`targetLaneId: ${targetLaneId}`)
+
+    const data = this.state.data;
+
+    const card = this.state.data.lanes[0].cards.find(x => x.id === cardId);
+    card._id = card.id;
+    card.laneId = 'done';
+    this.props.updateTask(card);
+
+    data.lanes[1].cards.push(card);
+
+    this.labelDoneUpdate(data.lanes[1].cards)
+    this.setState({data}, () => {
+      console.log(this.state.data);
+    })
   };
 
   handleInputChangeTimeSprint = (event) => {
@@ -255,7 +267,6 @@ class BoardProject extends Component {
           id="EditableBoard1"
           onDataChange={this.shouldReceiveNewData}
           onCardDelete={this.handleCardDelete}
-          handleDragStart={this.handleDragStart}
           handleDragEnd={this.handleDragEnd}
           onCardAdd={this.handleCardAdd}
           onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}

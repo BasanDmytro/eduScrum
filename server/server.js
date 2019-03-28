@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const Database = require("./db");
 const mongoose = require('mongoose');
 
-const API_PORT = 3001;
+const API_PORT = 3000;
 const app = express();
 const router = express.Router();
 

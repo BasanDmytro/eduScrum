@@ -4,7 +4,7 @@ import AUTH_ACTION_CONSTANTS from './authActionConstants';
 
 export const login = (email, password) => dispatch => {
   return axios
-    .post('http://localhost:3001/api/auth/login', { email, password })
+    .post('http://localhost:3000/api/auth/login', { email, password })
     .then(res => {
       const user = {...res.data};
 
@@ -35,7 +35,7 @@ export const logout = () => dispatch => {
 
 export const getUsers = () => dispatch => {
   return axios
-    .get('http://localhost:3001/api/auth/', { })
+    .get('http://localhost:3000/api/auth/', { })
     .then(res => {
       const users = res.data;
 

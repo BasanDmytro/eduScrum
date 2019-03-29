@@ -24,9 +24,9 @@ class Classroom extends Component {
         <Draggable>
           <div><Calender /></div>
         </Draggable>
-        <Draggable>
-          <div><StickyNote /></div>
-        </Draggable>
+        <DraggableCore>
+          <StickyNote />
+        </DraggableCore>
         <Draggable>
           <div><Instruction /></div>
         </Draggable>

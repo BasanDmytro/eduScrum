@@ -226,7 +226,6 @@ class BoardProject extends Component {
 
   handleClickMAJ(e) {
     this.props.getTasks();
-    console.log("xdcfyvgubhi")
     console.log(this.state)
     let count = this.state.count
     count++

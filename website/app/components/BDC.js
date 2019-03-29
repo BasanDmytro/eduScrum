@@ -47,9 +47,19 @@ class BDC extends Component {
     const data = this.state.dataChart
     var miseAJour = new moment();
     var duration = moment.duration(miseAJour.diff(this.state.startProject));
+    console.log("drfygtubhinjo")
+    console.log(data[data.length-2][1])
+    console.log((this.state.totalTeam*this.state.timeSprint*60) - (this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60))/this.state.timeSprint)
+    console.log(data)
+    if(parseInt(data[data.length-2][1]) === parseInt((this.state.totalTeam*this.state.timeSprint*60) - (this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60))/this.state.timeSprint)){
+      data.pop()
+      console.log("xiyfclugvjhk")
+    }
     data.pop()
+    console.log("tucvg")
+    console.log(data)
     data.push(
-        [((duration.get('hours')*60)+duration.get('minutes'))/60,(this.state.totalTeam*this.state.timeSprint*60) - this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60),(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
+        [((duration.get('hours')*60)+duration.get('minutes'))/60,(this.state.totalTeam*this.state.timeSprint*60) - (this.state.totalTeam * this.state.timeSprint * 60 *(((duration.get('hours')*60)+duration.get('minutes'))/60))/this.state.timeSprint,(this.state.totalLabel*this.state.totalTeam)-(this.state.totalLabelDone*this.state.totalTeam)],
         [this.state.timeSprint,0,0]
     )
     this.setState({dataChart: data});

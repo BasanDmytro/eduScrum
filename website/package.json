@@ -50,7 +50,7 @@
     "webpack-merge": "^4.2.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --config dev.config.js",
+    "start": "webpack-dev-server --port 3001 --config dev.config.js",
     "build": "webpack --config dev.config.js --watch --progress",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

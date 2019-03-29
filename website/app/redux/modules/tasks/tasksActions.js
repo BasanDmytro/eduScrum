@@ -5,7 +5,7 @@ export const getTasks = (query = {}) => dispatch => {
   const params = {...query};
 
   axios
-    .get('http://localhost:3001/api/task/', {params})
+    .get('http://localhost:3000/api/task/', {params})
     .then(res => {
       console.log(res);
       dispatch({
@@ -22,7 +22,7 @@ export const getTasks = (query = {}) => dispatch => {
 
 export const createTask = (task = {}) => dispatch => {
   axios
-    .post('http://localhost:3001/api/task/create', {task})
+    .post('http://localhost:3000/api/task/create', {task})
     .then(res => {
       dispatch({
         type: TASKS_ACTION_CONSTANTS.CREATE_TASK,
@@ -38,7 +38,7 @@ export const createTask = (task = {}) => dispatch => {
 
 export const updateTask = (task = {}) => dispatch => {
   axios
-    .post('http://localhost:3001/api/task/update', {task})
+    .post('http://localhost:3000/api/task/update', {task})
     .then(res => {
       dispatch({
         type: TASKS_ACTION_CONSTANTS.UPDATE,

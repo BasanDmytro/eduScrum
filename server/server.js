@@ -5,12 +5,14 @@ const logger = require("morgan");
 const cors = require('cors');
 const helmet = require('helmet');
 const Database = require("./db");
+const path = require('path');
 const mongoose = require('mongoose');
 
 const API_PORT = 3000;
 const app = express();
 const router = express.Router();
 
+app.use(express.static(__dirname + '/public/dist'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger("dev"));

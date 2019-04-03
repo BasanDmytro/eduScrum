@@ -38,9 +38,8 @@ Server will run on port 3000
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE - see the [LICENSE.md](LICENSE.md) file for details
 
-[//]:
 
 [NodeJS]: <https://nodejs.org>
 [Express]: <http://expressjs.com/>

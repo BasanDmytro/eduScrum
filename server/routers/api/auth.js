@@ -23,18 +23,19 @@ router.get('/', async (req, res) => { // count of boards
 
 router.post('/logup', async (req, res) => { // count of boards
   try {
+    let user = req.body && req.body.user;
     const data = {
-      email: req.body.email,
-      password: req.body.password,
-      fullName: `${req.body.firstName} ${req.body.lastName}`,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      email: user.email || '',
+      password: user.password || '',
+      fullName: `${user.firstName} ${user.lastName}` || '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
       isArchived: false,
       isBlocked: false,
       createdAt: new Date()
     };
-    const user = await UserService.createUser(data);
-    res.status(200).send(user);
+    const userObj = await UserService.createUser(data);
+    res.status(200).send(userObj);
   } catch (err) {
     console.log(err);
   }

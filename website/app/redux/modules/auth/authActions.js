@@ -25,6 +25,18 @@ export const login = (email, password) => dispatch => {
     });
 };
 
+export const registration = (user) => dispatch => {
+  return axios
+    .post('http://localhost:3000/api/auth/logup', { user })
+    .then(res => {
+
+    })
+    .catch(() => {
+      logout()(dispatch);
+      return Promise.reject();
+    });
+};
+
 export const logout = () => dispatch => {
   dispatch({
     type: AUTH_ACTION_CONSTANTS.LOGOUT,

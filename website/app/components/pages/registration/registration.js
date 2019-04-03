@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import '../../../assets/styles/registration.css';
+import {bindActionCreators} from "redux";
+import * as authActions from "../../../redux/modules/auth/authActions";
+import {connect} from "react-redux";
 class Registration extends Component {
 
   state = {
@@ -40,10 +43,11 @@ class Registration extends Component {
     this.setState({birthday: event.target.value});
   };
 
-  handleSubmit(event) {
-    alert('Création compte: ' + this.state.firstName);
+  handleSubmit = event => {
     event.preventDefault();
-  }
+    alert('Création compte: ' + this.state.firstName);
+    this.props.registration(this.state);
+  };
 
   checkPassword = () => {
     if (this.state.password !== this.state.passwordConfirmation) {
@@ -80,11 +84,11 @@ class Registration extends Component {
       <label>
         Sexe:
         <label class="container">Homme
-          <input type="radio" name ="gender" onclick={this.handleInputChangeGender}/>
+          <input type="radio" name ="gender" onChange={this.handleInputChangeGender}/>
           <span class="checkmark"></span>
         </label>
           <label class="container">Femme
-            <input type="radio"  name ="gender" onclick={this.handleInputChangeGender} />
+            <input type="radio"  name ="gender" onChange={this.handleInputChangeGender} />
             <span class="checkmark"></span>
         </label>
       </label>
@@ -100,4 +104,12 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+const mapStateToProps = (state, props) => ({
+
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  registration: authActions.registration,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

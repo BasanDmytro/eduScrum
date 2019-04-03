@@ -144,11 +144,12 @@ class BoardProject extends Component {
   };
 
   render() {
+    const group = (this.props && this.props.user && this.props.user.group) || [];
     return (
       <div>
         <Grid container justify="center" alignItems="center" style={{backgroundColor: '#6a4dff'}}>
           {
-            this.props.user.group.map(user => (
+            group.map(user => (
               <Chip
                 avatar={<Avatar>{user.charAt(0)}</Avatar>}
                 label={user}

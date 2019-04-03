@@ -30,8 +30,15 @@ cd server && npm i && npm start
 
 Server will run on port 3000
 
-License
-____
+## Authors
+
+* **Basan Dmytro** - [BasanDmytro](https://github.com/BasanDmytro)
+* **Lardy Anthony** - [Anthony-Lardy](https://github.com/Anthony-Lardy)
+* **Fisson Dylan**
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 [//]:
 

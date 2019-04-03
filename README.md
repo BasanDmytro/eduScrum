@@ -1,2 +1,2 @@
-# lemans-project
-Project M1
+# EDUSCRUM
+Student's project M1
